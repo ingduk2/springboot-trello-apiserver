@@ -20,6 +20,7 @@ public class User {
 
     @Column
     private String name;
+
     @Builder
     public User(String email, String name) {
         this.email = email;
