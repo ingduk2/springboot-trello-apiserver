@@ -1,0 +1,12 @@
+unKnown:
+  code: "-9999"
+  status: "500"
+  msg: "An unknown error has occurred."
+userNotFound:
+  code: "-1000"
+  status: "400"
+  msg: "This member not exist"
+inValidInput:
+  code: "-1111"
+  status: "400"
+  msg: "InValid Input Value"

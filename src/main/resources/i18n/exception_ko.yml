@@ -1,0 +1,12 @@
+unKnown:
+  code: "-9999"
+  status: 500
+  msg: "알수 없는 오류가 발생하였습니다."
+userNotFound:
+  code: "-1000"
+  status: "400"
+  msg: "존재하지 않는 회원입니다."
+inValidInput:
+  code: "-1111"
+  status: "400"
+  msg: "Input 값이 유효하지 않습니다."
