@@ -21,15 +21,6 @@ public class ErrorResopnse {
     @JsonProperty("errors")
     private List<CustomFieldError> customFieldErrors;
 
-    public static ErrorResopnse of(String message, int status, int code, Errors errors) {
-        return ErrorResopnse.builder()
-                .message(message)
-                .status(status)
-                .code(code)
-                .customFieldErrors(getFieldErrors(errors.getFieldErrors()))
-                .build();
-    }
-
     public static ErrorResopnse of(String message, int status, int code) {
         return ErrorResopnse.builder()
                 .message(message)
@@ -38,11 +29,12 @@ public class ErrorResopnse {
                 .build();
     }
 
+    public void setCustomFieldErrors(Errors errors) {
+        this.customFieldErrors = getFieldErrors(errors.getFieldErrors());
+    }
+
     private static List<CustomFieldError> getFieldErrors(List<FieldError> fieldErrors) {
         List<CustomFieldError> list = new ArrayList<>();
-        for (FieldError fieldError : fieldErrors) {
-            System.out.println(fieldError.toString());
-        }
 
         fieldErrors.forEach(error -> list.add(CustomFieldError.builder()
                 .field(error.getField())

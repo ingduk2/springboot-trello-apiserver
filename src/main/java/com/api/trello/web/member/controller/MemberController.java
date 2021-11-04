@@ -1,7 +1,6 @@
 package com.api.trello.web.member.controller;
 
-import com.api.trello.web.common.dto.ListResult;
-import com.api.trello.web.common.dto.ResponseResult;
+import com.api.trello.web.board.exception.CBoardNotFoundException;
 import com.api.trello.web.common.dto.resopnse.SuccessResponse;
 import com.api.trello.web.member.dto.MemberRequestDto;
 import com.api.trello.web.member.dto.MemberResponseDto;
@@ -19,12 +18,9 @@ import javax.validation.Valid;
 public class MemberController {
 
     private final MemberService memberService;
-    private final ResponseResult responseResult;
 
     @PostMapping("/v1/member")
     public ResponseEntity<SuccessResponse> saveMember(@RequestBody @Valid MemberRequestDto requestDto) {
-        log.info("{} {}", requestDto.getEmail(), requestDto.getName());
-
         Long save = memberService.save(requestDto);
         return ResponseEntity.ok().body(SuccessResponse.success());
     }
@@ -36,17 +32,17 @@ public class MemberController {
     }
 
     @GetMapping("/v1/members")
-    public ListResult<MemberResponseDto> findAllMember() {
-        return responseResult.getListResult(memberService.findAll());
-    }
-
-    @GetMapping("/v2/members")
-    public ResponseEntity<SuccessResponse> findAllMember2() {
+    public ResponseEntity<SuccessResponse> findAllMember() {
         return ResponseEntity.ok().body(SuccessResponse.of(memberService.findAll()));
     }
 
     @GetMapping("/v1/exception")
     public void exception() throws Exception {
         throw new Exception();
+    }
+
+    @GetMapping("/v1/custom")
+    public void custom() {
+        throw new CBoardNotFoundException();
     }
 }

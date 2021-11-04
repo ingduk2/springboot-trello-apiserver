@@ -1,14 +1,11 @@
 package com.api.trello.web.member.exception;
 
-public class CUserNotFoundException extends RuntimeException{
+import com.api.trello.advice.exception.BusinessException;
+import com.api.trello.advice.exception.ExceptionCode;
+
+public class CUserNotFoundException extends BusinessException {
+
     public CUserNotFoundException() {
-    }
-
-    public CUserNotFoundException(String message) {
-        super(message);
-    }
-
-    public CUserNotFoundException(String message, Throwable cause) {
-        super(message, cause);
+        super(ExceptionCode.USER_NOT_FOUND);
     }
 }

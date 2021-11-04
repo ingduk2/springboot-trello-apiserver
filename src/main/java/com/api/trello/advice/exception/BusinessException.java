@@ -1,10 +1,10 @@
 package com.api.trello.advice.exception;
 
-public class CustomException extends RuntimeException{
+public class BusinessException extends RuntimeException{
 
     private ExceptionCode exceptionCode;
 
-    public CustomException(ExceptionCode exceptionCode) {
+    public BusinessException(ExceptionCode exceptionCode) {
         super(exceptionCode.getMsg());
         this.exceptionCode = exceptionCode;
     }

@@ -10,3 +10,15 @@ inValidInput:
   code: "-1111"
   status: "400"
   msg: "InValid Input Value"
+boardNotFound:
+  code: "-2222"
+  status: "400"
+  msg: "This board not exist"
+methodNotAllowed:
+  code: "-4444"
+  status: "405"
+  msg: "Method Not Allowed "
+notFound:
+  code: "-4444"
+  status: "404"
+  msg: "Not Found "
