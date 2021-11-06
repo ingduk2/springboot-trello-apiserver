@@ -12,7 +12,11 @@ public enum ExceptionCode {
     USER_NOT_FOUND("userNotFound"),
     BOARD_NOT_FOUND("boardNotFound"),
     METHOD_NOT_ALLOWED("methodNotAllowed"),
-    NOT_FOUND("notFound");
+    NOT_FOUND("notFound"),
+    EMAIL_EXIST("emailExist"),
+    EMAIL_NOT_FOUND("emailNotFound"),
+    PASSWORD_NOT_MATCH("passwordNotMatch"),
+    JSON_PARSER("jsonParser");
 
     private String name;
 

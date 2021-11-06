@@ -24,13 +24,21 @@ public class Member extends BaseTimeEntity {
     @Column
     private String email;
 
+    @Column String password;
+
     @Builder
-    public Member(String name, String email) {
+    public Member(Long id, String name, String email, String password) {
+        this.id = id;
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 
     public void setWorkspace(WorkSpace workSpace) {
         workSpace.setMember(this);
+    }
+
+    public void update(String name) {
+        this.name = name;
     }
 }

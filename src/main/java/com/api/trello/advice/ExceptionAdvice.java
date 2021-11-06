@@ -9,6 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -78,7 +79,7 @@ public class ExceptionAdvice {
      * 404 Not Found Handler
      */
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity<ErrorResopnse> handleNoHandlerFoundException(NoHandlerFoundException e, HttpServletRequest request) {
+    protected ResponseEntity<ErrorResopnse> handleNoHandlerFoundException(NoHandlerFoundException e, HttpServletRequest request) {
         log.error("handleNoHandlerFoundException", e);
         ExceptionCode code = ExceptionCode.NOT_FOUND;
         ErrorResopnse response = getErrorResponse(
@@ -89,6 +90,23 @@ public class ExceptionAdvice {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * JsonParseException 안잡혀서 HttpMessageNotReadableException 로 잡으니잡히네..
+     * 처음것만 잡히는건가..?
+     * 수정 필요
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<ErrorResopnse> handleJsonParseException(HttpMessageNotReadableException e) {
+        log.error("JsonParseException", e);
+        ExceptionCode code = ExceptionCode.JSON_PARSER;
+        ErrorResopnse response = getErrorResponse(
+                getStr(code.getMsg()),
+                getInt(code.getStatus()),
+                getInt(code.getCode()));
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 
     /**
      * msg, status, code 는 공통으로 자주써서 method로 작성.
@@ -96,6 +114,7 @@ public class ExceptionAdvice {
      * - 여기에 BindingList 받아서 if null 이면 구분 처리가 더 나은지 모르겠음..
      */
     private ErrorResopnse getErrorResponse(ExceptionCode exceptionCode) {
+        log.info("===== {} {} {}", exceptionCode.getMsg(), exceptionCode.getCode(), exceptionCode.getStatus());
         return getErrorResponse(getStr(exceptionCode.getMsg()),
                 getInt(exceptionCode.getStatus()),
                 getInt(exceptionCode.getCode()));

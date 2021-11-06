@@ -9,51 +9,33 @@ import com.api.trello.web.member.dto.MemberSignInRequestDto;
 import com.api.trello.web.member.exception.CEmailExistException;
 import com.api.trello.web.member.exception.CEmailNotFoundException;
 import com.api.trello.web.member.exception.CPasswordNotMatchException;
-import com.api.trello.web.member.exception.CUserNotFoundException;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberService {
+public class SignService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Transactional(readOnly = true)
-    public List<MemberResponseDto> findAll() {
-        return memberRepository.findAll()
-                .stream()
-                .map(MemberResponseDto::of)
-                .collect(Collectors.toList());
+    @Transactional
+    public MemberResponseDto signUp(MemberRequestDto requestDto) {
+
+        if (memberRepository.countByEmail(requestDto.getEmail()) > 0) {
+            throw new CEmailExistException();
+        }
+
+        Member member = requestDto.toEntity(passwordEncoder);
+        return MemberResponseDto.of(memberRepository.save(member));
     }
 
     @Transactional
-    public MemberResponseDto findById(Long memberId) {
-        Member member = memberRepository
-                .findById(memberId)
-                .orElseThrow(CUserNotFoundException::new);
-
-        return MemberResponseDto.of(member);
-    }
-
-    @Transactional
-    public MemberResponseDto update(Long memberId, String name) {
-        Member member = memberRepository
-                .findById(memberId)
-                .orElseThrow(CUserNotFoundException::new);
-
-        member.update(name);
-        return MemberResponseDto.of(member);
-    }
-
-    @Transactional
-    public void signIn(MemberSignInRequestDto requestDto) {
+    public MemberResponseDto signIn(MemberSignInRequestDto requestDto) {
         //email 존재하는지 확인.
         Member member = memberRepository
                 .findByEmail(requestDto.getEmail())
@@ -63,5 +45,7 @@ public class MemberService {
         if (!PasswordUtil.equalPassword(requestDto.getPassword(), member.getPassword())) {
             throw new CPasswordNotMatchException();
         }
+
+        return MemberResponseDto.of(member);
     }
 }
