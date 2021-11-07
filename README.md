@@ -5,7 +5,7 @@
 * [트렐로](https://trello.com/) 프로젝트 관리 소프트웨어를 보고 재밌어보여 클론프로젝트를 만들어보려고 합니다.
 
 ### 문서
-* [Wiki](https://github.com/ingduk2/springboot-trello-apiserver/wiki/trello-apiserver)
+* [Wiki](https://github.com/ingduk2/springboot-trello-apiserver/wiki)
 
 ### 기술 스택
 * BackEnd
