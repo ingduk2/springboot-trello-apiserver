@@ -16,7 +16,8 @@ public enum ExceptionCode {
     EMAIL_EXIST("emailExist"),
     EMAIL_NOT_FOUND("emailNotFound"),
     PASSWORD_NOT_MATCH("passwordNotMatch"),
-    JSON_PARSER("jsonParser");
+    JSON_PARSER("jsonParser"),
+    WORKSPACE_NOT_FOUND("workspaceNotFound");
 
     private String name;
 

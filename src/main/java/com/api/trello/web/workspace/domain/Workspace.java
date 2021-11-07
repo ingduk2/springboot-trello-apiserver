@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class WorkSpace extends BaseTimeEntity {
+public class Workspace extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +25,29 @@ public class WorkSpace extends BaseTimeEntity {
     @Column
     private String name;
 
+    @Column
+    private String shortName;
+
+    @Column
+    private String description;
+
     @Builder
-    public WorkSpace(Member member, String name) {
+    public Workspace(Member member, String name, String shortName, String description) {
         this.member = member;
         this.name = name;
+        this.shortName = shortName;
+        this.description = description;
     }
 
     //연관관계
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public void update(String name, String shortName, String description) {
+        this.name = name;
+        this.shortName = shortName;
+        this.description = description;
     }
 
 }

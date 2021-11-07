@@ -18,10 +18,10 @@ public class SuccessResponse<T> {
     private T data;
 
     public static SuccessResponse success() {
-        return of(null);
+        return success(null);
     }
 
-    public static SuccessResponse of(Object data) {
+    public static SuccessResponse success(Object data) {
         return SuccessResponse.builder()
                 .message("success")
                 .status(200)

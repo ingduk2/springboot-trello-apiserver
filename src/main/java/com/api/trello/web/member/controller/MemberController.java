@@ -15,21 +15,21 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/member/{memberId}")
+    @GetMapping("/members/{memberId}")
     public ResponseEntity<SuccessResponse> findMemberById(@PathVariable long memberId) {
         MemberResponseDto responseDto = memberService.findById(memberId);
-        return ResponseEntity.ok().body(SuccessResponse.of(responseDto));
+        return ResponseEntity.ok().body(SuccessResponse.success(responseDto));
     }
 
     @GetMapping("/members")
     public ResponseEntity<SuccessResponse> findAllMember() {
-        return ResponseEntity.ok().body(SuccessResponse.of(memberService.findAll()));
+        return ResponseEntity.ok().body(SuccessResponse.success(memberService.findAll()));
     }
 
-    @PutMapping("/member")
-    public ResponseEntity<SuccessResponse> modifyMember(Long memberId, @RequestParam String name) {
+    @PutMapping("/members/{memberId}")
+    public ResponseEntity<SuccessResponse> modifyMember(@PathVariable Long memberId, @RequestParam String name) {
         MemberResponseDto responseDto = memberService.update(memberId, name);
-        return ResponseEntity.ok().body(SuccessResponse.of(responseDto));
+        return ResponseEntity.ok().body(SuccessResponse.success(responseDto));
     }
 
 }

@@ -24,12 +24,12 @@ public class SignController {
     @PostMapping("/signup")
     public ResponseEntity<SuccessResponse> signUp(@RequestBody @Valid MemberRequestDto requestDto) {
         MemberResponseDto responseDto = signService.signUp(requestDto);
-        return ResponseEntity.ok().body(SuccessResponse.of(responseDto));
+        return ResponseEntity.ok().body(SuccessResponse.success(responseDto));
     }
 
     @PostMapping("/signin")
     public ResponseEntity<SuccessResponse> signIn(@RequestBody @Valid MemberSignInRequestDto requestDto) {
-        return ResponseEntity.ok(SuccessResponse.of(signService.signIn(requestDto)));
+        return ResponseEntity.ok(SuccessResponse.success(signService.signIn(requestDto)));
     }
 
 }

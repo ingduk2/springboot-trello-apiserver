@@ -1,7 +1,7 @@
 package com.api.trello.web.member.domain;
 
 import com.api.trello.web.common.domain.BaseTimeEntity;
-import com.api.trello.web.workspace.domain.WorkSpace;
+import com.api.trello.web.workspace.domain.Workspace;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,8 @@ public class Member extends BaseTimeEntity {
     @Column
     private String email;
 
-    @Column String password;
+    @Column
+    private String password;
 
     @Builder
     public Member(Long id, String name, String email, String password) {
@@ -34,11 +35,16 @@ public class Member extends BaseTimeEntity {
         this.password = password;
     }
 
-    public void setWorkspace(WorkSpace workSpace) {
-        workSpace.setMember(this);
-    }
-
     public void update(String name) {
         this.name = name;
     }
+
+    /**
+     * 연관관계 메서드
+     */
+    public void addWorkspace(Workspace workSpace) {
+        workSpace.setMember(this);
+    }
+
+
 }

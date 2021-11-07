@@ -38,3 +38,7 @@ jsonParser:
   code: "-4000"
   status: "400"
   msg: "JsonParserException"
+workspaceNotFound:
+  code: "3330"
+  status: "400"
+  msg: "This Workspace Not Found"
