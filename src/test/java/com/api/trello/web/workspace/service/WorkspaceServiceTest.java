@@ -63,8 +63,16 @@ class WorkspaceServiceTest {
     @Test
     void test_n_플러스_1() {
         System.out.println("====test start====");
+        //member 조회 1개, workspace 1개
+        workspaceService.findById(1L);
+
         List<WorkspaceResponseDto> all = workspaceService.findAllWorkspace();
+
+        //workspace 1개 + member 2명 = 3번
 //        List<Workspace> all = workspaceRepository.findAll();
+
+        //1번
+//        List<Workspace> all = workspaceRepository.findAllFetch();
         Assertions.assertEquals(all.size(), 5);
     }
 

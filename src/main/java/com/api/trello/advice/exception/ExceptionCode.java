@@ -9,7 +9,7 @@ public enum ExceptionCode {
      */
     UNKNOWN("unKnown"),
     INVALID_INPUT("inValidInput"),
-    USER_NOT_FOUND("userNotFound"),
+    MEMBER_NOT_FOUND("memberNotFound"),
     BOARD_NOT_FOUND("boardNotFound"),
     METHOD_NOT_ALLOWED("methodNotAllowed"),
     NOT_FOUND("notFound"),
@@ -17,7 +17,9 @@ public enum ExceptionCode {
     EMAIL_NOT_FOUND("emailNotFound"),
     PASSWORD_NOT_MATCH("passwordNotMatch"),
     JSON_PARSER("jsonParser"),
-    WORKSPACE_NOT_FOUND("workspaceNotFound");
+    WORKSPACE_NOT_FOUND("workspaceNotFound"), 
+    INVITED_WORKSPACE_MEMBER_IS_WORKSPACE_OWNER("invitedWorkspaceMemberIsWorkspaceOwner"),
+    INVITED_WORKSPACE_ALREADY("invitedWorkspaceAlready");
 
     private String name;
 

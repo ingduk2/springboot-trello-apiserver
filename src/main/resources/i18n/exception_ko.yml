@@ -2,7 +2,7 @@ unKnown:
   code: "-9999"
   status: "500"
   msg: "알수 없는 오류가 발생하였습니다."
-userNotFound:
+memberNotFound:
   code: "-1000"
   status: "400"
   msg: "존재하지 않는 회원입니다."
@@ -42,3 +42,11 @@ workspaceNotFound:
   code: "3330"
   status: "400"
   msg: "Workspace가 없습니다."
+invitedWorkspaceMemberIsWorkspaceOwner:
+  code: "3331"
+  status: "400"
+  msg: "초대한 member가 이미 Workspace의 소유주 입니다."
+invitedWorkspaceAlready:
+  code: "3335"
+  status: "400"
+  msg: "이미 workspace에 초대되어 있습니다."

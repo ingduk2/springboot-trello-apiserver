@@ -1,15 +1,13 @@
 package com.api.trello.web.workspace.service;
 
-import com.api.trello.util.SecurityUtil;
 import com.api.trello.web.member.domain.Member;
-import com.api.trello.web.member.domain.MemberRepository;
-import com.api.trello.web.member.exception.CEmailNotFoundException;
+import com.api.trello.web.member.service.MemberService;
 import com.api.trello.web.workspace.domain.Workspace;
 import com.api.trello.web.workspace.domain.WorkspaceRepository;
 import com.api.trello.web.workspace.dto.WorkspaceResponseDto;
 import com.api.trello.web.workspace.dto.WorkspaceSaveRequestDto;
 import com.api.trello.web.workspace.dto.WorkspaceUpdateRequestDto;
-import com.api.trello.web.workspace.exception.CWorkspaceNotFound;
+import com.api.trello.web.workspace.exception.CWorkspaceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +20,11 @@ import java.util.stream.Collectors;
 public class WorkspaceService {
 
     private final WorkspaceRepository workspaceRepository;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @Transactional(readOnly = true)
     public List<WorkspaceResponseDto> findAllWorkspace() {
-        Member member = findByCurrentMember();
+        Member member = memberService.findCurrentMember();
 
         return workspaceRepository.findAllByMember(member).stream()
                 .map(WorkspaceResponseDto::of)
@@ -34,15 +32,20 @@ public class WorkspaceService {
     }
 
     @Transactional(readOnly = true)
-    public WorkspaceResponseDto findById(Long workspaceId) {
-        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFound::new);
+    public WorkspaceResponseDto findWorkspaceResponseDtoById(Long workspaceId) {
+        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFoundException::new);
 
         return WorkspaceResponseDto.of(workspace);
     }
 
+    @Transactional(readOnly = true)
+    public Workspace findById(Long workspaceId) {
+        return workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFoundException::new);
+    }
+
     @Transactional
     public WorkspaceResponseDto save(WorkspaceSaveRequestDto requestDto) {
-        Member member = findByCurrentMember();
+        Member member = memberService.findCurrentMember();
 
         Workspace workspace = requestDto.toEntity();
 //        workspace.setMember(member); //연관관계
@@ -54,7 +57,7 @@ public class WorkspaceService {
 
     @Transactional
     public Long delete(Long workspaceId) {
-        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFound::new);
+        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFoundException::new);
 
         workspaceRepository.delete(workspace);
         return workspaceId;
@@ -62,15 +65,11 @@ public class WorkspaceService {
 
     @Transactional
     public WorkspaceResponseDto update(Long workspaceId, WorkspaceUpdateRequestDto requestDto) {
-        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFound::new);
+        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFoundException::new);
 
         workspace.update(requestDto.getName(), requestDto.getShortName(), requestDto.getDescription());
         return WorkspaceResponseDto.of(workspace);
     }
 
-    private Member findByCurrentMember() {
-        String userEmail = SecurityUtil.getCurrentUsername().orElseThrow(CEmailNotFoundException::new);
-        return memberRepository.findByEmail(userEmail).orElseThrow(CEmailNotFoundException::new);
-    }
 
 }
