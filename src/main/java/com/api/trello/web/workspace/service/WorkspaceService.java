@@ -57,8 +57,7 @@ public class WorkspaceService {
 
     @Transactional
     public Long delete(Long workspaceId) {
-        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFoundException::new);
-
+        Workspace workspace = findById(workspaceId);
         workspaceRepository.delete(workspace);
         return workspaceId;
     }

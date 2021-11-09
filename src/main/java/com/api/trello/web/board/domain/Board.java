@@ -1,13 +1,16 @@
 package com.api.trello.web.board.domain;
 
+import com.api.trello.web.member.domain.Member;
 import com.api.trello.web.workspace.domain.Workspace;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Board {
 
@@ -20,16 +23,28 @@ public class Board {
     @JoinColumn(name = "workspace_id")
     private Workspace workSpace;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     @Column
     private String title;
 
-    public Board(Workspace workSpace, String title) {
+    @Builder
+    public Board(Long id, Workspace workSpace, Member member, String title) {
+        this.id = id;
         this.workSpace = workSpace;
+        this.member = member;
         this.title = title;
     }
+
 
     //연관관계
     public void setWorkSpace(Workspace workSpace) {
         this.workSpace = workSpace;
+    }
+
+    public void update(String title) {
+        this.title = title;
     }
 }
