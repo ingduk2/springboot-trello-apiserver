@@ -2,11 +2,14 @@ package com.api.trello.web.workspace.domain;
 
 import com.api.trello.web.common.domain.BaseTimeEntity;
 import com.api.trello.web.member.domain.Member;
+import com.api.trello.web.workspaceinvite.domain.InviteWorkspace;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -21,6 +24,9 @@ public class Workspace extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(mappedBy = "workspace")
+    Set<InviteWorkspace> inviteWorkspaces = new HashSet<>();
 
     @Column
     private String name;

@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,14 @@ public class WorkspaceService {
     public List<WorkspaceResponseDto> findAllWorkspace() {
         Member member = memberService.findCurrentMember();
 
-        return workspaceRepository.findAllByMember(member).stream()
+        List<Workspace> myWorkspaces = workspaceRepository.findAllByMember(member);
+        List<Workspace> inviteWorkspaces = workspaceRepository.findAllFetchInvite(member);
+
+        List<Workspace> workspaces = Stream.of(myWorkspaces, inviteWorkspaces)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+
+        return workspaces.stream()
                 .map(WorkspaceResponseDto::of)
                 .collect(Collectors.toList());
     }

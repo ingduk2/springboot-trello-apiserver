@@ -23,18 +23,16 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect
         show_sql: true
-#        format_sql: true
+        format_sql: true
 
   messages:
     basename: i18n/exception
     encoding: UTF-8
 
-  test: "testasdfasdfsadf"
-
-#logging:
-#  level:
-#    org:
-#      hibernate:
-#        type:
-#          descriptor:
-#            sql: trace
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace

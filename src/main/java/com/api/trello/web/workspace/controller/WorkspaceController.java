@@ -4,8 +4,8 @@ import com.api.trello.web.common.dto.resopnse.SuccessResponse;
 import com.api.trello.web.workspace.dto.WorkspaceResponseDto;
 import com.api.trello.web.workspace.dto.WorkspaceSaveRequestDto;
 import com.api.trello.web.workspace.dto.WorkspaceUpdateRequestDto;
-import com.api.trello.web.workspaceinvite.service.InviteWorkspaceService;
 import com.api.trello.web.workspace.service.WorkspaceService;
+import com.api.trello.web.workspaceinvite.service.InviteWorkspaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,10 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,14 +27,9 @@ public class WorkspaceController {
     @GetMapping("/workspaces")
     public ResponseEntity<SuccessResponse> findAllWorkspace() {
         List<WorkspaceResponseDto> myWorkspaces = workspaceService.findAllWorkspace();
-        List<WorkspaceResponseDto> inviteWorkspaces = inviteWorkspaceService.findAllByMy();
-
-        List<WorkspaceResponseDto> workspaces = Stream.of(myWorkspaces, inviteWorkspaces)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
 
         return ResponseEntity.ok()
-                .body(SuccessResponse.success(workspaces));
+                .body(SuccessResponse.success(myWorkspaces));
     }
 
     @GetMapping("/workspaces/{workspaceId}")
