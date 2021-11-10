@@ -73,7 +73,7 @@ public class WorkspaceService {
 
     @Transactional
     public WorkspaceResponseDto update(Long workspaceId, WorkspaceUpdateRequestDto requestDto) {
-        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFoundException::new);
+        Workspace workspace = findById(workspaceId);
 
         workspace.update(requestDto.getName(), requestDto.getShortName(), requestDto.getDescription());
         return WorkspaceResponseDto.of(workspace);

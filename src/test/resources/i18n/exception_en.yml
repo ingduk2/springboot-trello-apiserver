@@ -2,7 +2,7 @@ unKnown:
   code: "-9999"
   status: "500"
   msg: "An unknown error has occurred."
-userNotFound:
+memberNotFound:
   code: "-1000"
   status: "400"
   msg: "This member not exist"
@@ -38,3 +38,15 @@ jsonParser:
   code: "-4000"
   status: "400"
   msg: "JsonParserException"
+workspaceNotFound:
+  code: "3330"
+  status: "400"
+  msg: "This Workspace Not Found"
+invitedWorkspaceMemberIsWorkspaceOwner:
+  code: "3331"
+  status: "400"
+  msg: "invited Workspace Member is Already Workspace Owner"
+invitedWorkspaceAlready:
+  code: "3335"
+  status: "400"
+  msg: "invited workspace Already"

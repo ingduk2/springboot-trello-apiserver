@@ -5,8 +5,8 @@ import com.api.trello.web.workspace.dto.WorkspaceResponseDto;
 import com.api.trello.web.workspace.dto.WorkspaceSaveRequestDto;
 import com.api.trello.web.workspace.dto.WorkspaceUpdateRequestDto;
 import com.api.trello.web.workspace.service.WorkspaceService;
-import com.api.trello.web.workspaceinvite.service.InviteWorkspaceService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +17,12 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class WorkspaceController {
 
     private final WorkspaceService workspaceService;
-    private final InviteWorkspaceService inviteWorkspaceService;
 
     @GetMapping("/workspaces")
     public ResponseEntity<SuccessResponse> findAllWorkspace() {
@@ -49,7 +49,6 @@ public class WorkspaceController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(location);
-
         return new ResponseEntity<>(SuccessResponse.created(savedWorkspace), headers, HttpStatus.CREATED);
     }
 
@@ -63,7 +62,8 @@ public class WorkspaceController {
     @PutMapping("/workspaces/{workspaceId}")
     public ResponseEntity<SuccessResponse> updateWorkspace(@PathVariable Long workspaceId,
                                                            @RequestBody @Valid WorkspaceUpdateRequestDto requestDto) {
-        return ResponseEntity.ok()
-                .body(SuccessResponse.success(workspaceService.update(workspaceId, requestDto)));
+
+        WorkspaceResponseDto updated = workspaceService.update(workspaceId, requestDto);
+        return ResponseEntity.ok().body(SuccessResponse.success(updated));
     }
 }
