@@ -303,5 +303,4 @@ class WorkspaceControllerTest {
                                 , CWorkspaceNotFoundException.class));
     }
 
-
 }

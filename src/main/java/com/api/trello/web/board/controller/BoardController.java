@@ -34,7 +34,6 @@ public class BoardController {
         return ResponseEntity.ok(SuccessResponse.success(board));
     }
 
-    //workspaceId 를 같이 받아야할지 고민. 내 workspace가 아니라 초대받은 경우일수 있기 때문에 필요
     @PostMapping("/boards")
     public ResponseEntity<SuccessResponse> saveBoard(@RequestBody @Valid BoardSaveRequestDto requestDto,
                                                      UriComponentsBuilder uriBuilder) {

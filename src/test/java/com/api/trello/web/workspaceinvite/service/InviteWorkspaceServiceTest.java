@@ -65,7 +65,6 @@ class InviteWorkspaceServiceTest {
         given(workspaceService.findById(workspaceId))
                 .willReturn(getWorkspace(workspaceId, memberId));
         //when
-
         //then
         assertThrows(CInvitedWorkspaceMemberIsWorkspaceOwnerException.class,
                 () -> inviteWorkspaceService.invite(workspaceId, memberId));
