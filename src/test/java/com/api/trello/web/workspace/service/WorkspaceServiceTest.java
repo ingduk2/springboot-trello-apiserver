@@ -93,7 +93,7 @@ class WorkspaceServiceTest {
         //then
         assertEquals(allWorkspace.size(), 10);
         assertEquals(allWorkspace.get(0).getName(), "workspace1");
-        assertEquals(allWorkspace.get(0).getId(), 1L);
+        assertEquals(allWorkspace.get(0).getWorkspaceId(), 1L);
     }
 
     @Test
@@ -135,8 +135,8 @@ class WorkspaceServiceTest {
 
         //when
         assertThat(dto).isInstanceOf(WorkspaceResponseDto.class);
-        assertThat(dto.getId()).isEqualTo(1L);
-        assertEquals(dto.getId(), 1);
+        assertThat(dto.getWorkspaceId()).isEqualTo(1L);
+        assertEquals(dto.getWorkspaceId(), 1);
         assertEquals(dto.getName(), "workspace1");
     }
 
@@ -186,7 +186,7 @@ class WorkspaceServiceTest {
         WorkspaceResponseDto savedDto = workspaceService.save(requestDto);
 
         //then
-        assertEquals(savedDto.getId(), workspaceId);
+        assertEquals(savedDto.getWorkspaceId(), workspaceId);
         assertEquals(savedDto.getEmail(), "ingduk2@gmail.com");
     }
 

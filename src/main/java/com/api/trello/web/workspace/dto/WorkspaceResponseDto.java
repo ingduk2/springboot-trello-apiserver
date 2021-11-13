@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class WorkspaceResponseDto {
 
-    private Long id;
+    private Long workspaceId;
     private String name;
     private String shortName;
     private String description;
@@ -16,8 +16,8 @@ public class WorkspaceResponseDto {
     private String email;
 
     @Builder
-    public WorkspaceResponseDto(Long id, String name, String shortName, String description, Long memberId, String email) {
-        this.id = id;
+    public WorkspaceResponseDto(Long workspaceId, String name, String shortName, String description, Long memberId, String email) {
+        this.workspaceId = workspaceId;
         this.name = name;
         this.shortName = shortName;
         this.description = description;
@@ -27,7 +27,7 @@ public class WorkspaceResponseDto {
 
     public static WorkspaceResponseDto of(Workspace workspace) {
         return WorkspaceResponseDto.builder()
-                .id(workspace.getId())
+                .workspaceId(workspace.getId())
                 .name(workspace.getName())
                 .shortName(workspace.getShortName())
                 .description(workspace.getDescription())

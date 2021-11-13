@@ -2,7 +2,7 @@ package com.api.trello.advice;
 
 import com.api.trello.advice.exception.BusinessException;
 import com.api.trello.advice.exception.ExceptionCode;
-import com.api.trello.web.common.dto.resopnse.ErrorResopnse;
+import com.api.trello.web.common.dto.resopnse.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -29,9 +29,9 @@ public class ExceptionAdvice {
      * Null Point Exception 등 그 밖의 예외처리.
      */
     @ExceptionHandler(Exception.class)
-    protected ResponseEntity<ErrorResopnse> defaultException(HttpServletRequest request, Exception e) {
+    protected ResponseEntity<ErrorResponse> defaultException(HttpServletRequest request, Exception e) {
         log.error("defaultException", e);
-        ErrorResopnse response = getErrorResponse(ExceptionCode.UNKNOWN);
+        ErrorResponse response = getErrorResponse(ExceptionCode.UNKNOWN);
 
         return ResponseEntity.internalServerError().body(response);
     }
@@ -40,9 +40,9 @@ public class ExceptionAdvice {
      * javax.validation.Valid or @Validated 으로 binding error 발생시
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<ErrorResopnse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("handleMethodArgumentNotValidException", e);
-        ErrorResopnse response = getErrorResponse(ExceptionCode.INVALID_INPUT);
+        ErrorResponse response = getErrorResponse(ExceptionCode.INVALID_INPUT);
         response.setCustomFieldErrors(e.getBindingResult());
 
         return ResponseEntity.badRequest().body(response);
@@ -53,9 +53,9 @@ public class ExceptionAdvice {
      * userNotFoundException, BoardNotFoundException등
      */
     @ExceptionHandler(BusinessException.class)
-    protected ResponseEntity<ErrorResopnse> handleBusinessException(BusinessException e) {
+    protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
         log.error("handleCustomException", e);
-        ErrorResopnse response = getErrorResponse(e.getExceptionCode());
+        ErrorResponse response = getErrorResponse(e.getExceptionCode());
 
         return ResponseEntity.badRequest().body(response);
     }
@@ -64,10 +64,10 @@ public class ExceptionAdvice {
      * 405 Method Not Allowed Handler
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    protected ResponseEntity<ErrorResopnse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
+    protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
         log.error("handleHttpRequestMethodNotSupportedException", e);
         ExceptionCode code = ExceptionCode.METHOD_NOT_ALLOWED;
-        ErrorResopnse response = getErrorResponse(
+        ErrorResponse response = getErrorResponse(
                 getStr(code.getMsg()) + request.getRequestURI(),
                 getInt(code.getStatus()),
                 getInt(code.getCode()));
@@ -79,10 +79,10 @@ public class ExceptionAdvice {
      * 404 Not Found Handler
      */
     @ExceptionHandler(NoHandlerFoundException.class)
-    protected ResponseEntity<ErrorResopnse> handleNoHandlerFoundException(NoHandlerFoundException e, HttpServletRequest request) {
+    protected ResponseEntity<ErrorResponse> handleNoHandlerFoundException(NoHandlerFoundException e, HttpServletRequest request) {
         log.error("handleNoHandlerFoundException", e);
         ExceptionCode code = ExceptionCode.NOT_FOUND;
-        ErrorResopnse response = getErrorResponse(
+        ErrorResponse response = getErrorResponse(
                 getStr(code.getMsg()) + request.getRequestURI(),
                 getInt(code.getStatus()),
                 getInt(code.getCode()));
@@ -96,10 +96,10 @@ public class ExceptionAdvice {
      * 수정 필요
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    protected ResponseEntity<ErrorResopnse> handleJsonParseException(HttpMessageNotReadableException e) {
+    protected ResponseEntity<ErrorResponse> handleJsonParseException(HttpMessageNotReadableException e) {
         log.error("JsonParseException", e);
         ExceptionCode code = ExceptionCode.JSON_PARSER;
-        ErrorResopnse response = getErrorResponse(
+        ErrorResponse response = getErrorResponse(
                 getStr(code.getMsg()),
                 getInt(code.getStatus()),
                 getInt(code.getCode()));
@@ -113,14 +113,14 @@ public class ExceptionAdvice {
      * errorList 는 valid쪽에서만 사용해서 valid는 set으로 변경.
      * - 여기에 BindingList 받아서 if null 이면 구분 처리가 더 나은지 모르겠음..
      */
-    private ErrorResopnse getErrorResponse(ExceptionCode exceptionCode) {
+    private ErrorResponse getErrorResponse(ExceptionCode exceptionCode) {
         return getErrorResponse(getStr(exceptionCode.getMsg()),
                 getInt(exceptionCode.getStatus()),
                 getInt(exceptionCode.getCode()));
     }
 
-    private ErrorResopnse getErrorResponse(String msg, int status, int code) {
-        return ErrorResopnse.of(msg, status, code);
+    private ErrorResponse getErrorResponse(String msg, int status, int code) {
+        return ErrorResponse.of(msg, status, code);
     }
 
     private String getStr(String code) {

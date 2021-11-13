@@ -1,5 +1,6 @@
 package com.api.trello.web.workspace.domain;
 
+import com.api.trello.web.board.domain.Board;
 import com.api.trello.web.common.domain.BaseTimeEntity;
 import com.api.trello.web.member.domain.Member;
 import com.api.trello.web.workspaceinvite.domain.InviteWorkspace;
@@ -48,6 +49,10 @@ public class Workspace extends BaseTimeEntity {
     //연관관계
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public void addBoard(Board board) {
+        board.setWorkSpace(this);
     }
 
     public void update(String name, String shortName, String description) {

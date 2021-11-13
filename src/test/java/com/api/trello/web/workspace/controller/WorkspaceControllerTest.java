@@ -51,7 +51,7 @@ class WorkspaceControllerTest {
         List<WorkspaceResponseDto> myWorkspaces = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             myWorkspaces.add(WorkspaceResponseDto.builder()
-                    .id((long) i)
+                    .workspaceId((long) i)
                     .name("workspace" + i)
                     .build());
         }
@@ -99,7 +99,7 @@ class WorkspaceControllerTest {
 
         given(workspaceService.findWorkspaceResponseDtoById(workspaceId))
                 .willReturn(WorkspaceResponseDto.builder()
-                        .id(workspaceId)
+                        .workspaceId(workspaceId)
                         .name("workspace")
                         .email("ingduk2@gmail.com")
                         .memberId(10L)
@@ -115,7 +115,7 @@ class WorkspaceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("success"))
                 .andExpect(jsonPath("$.status").value(200))
-                .andExpect(jsonPath("$.data.id").value(1))
+                .andExpect(jsonPath("$.data.workspaceId").value(1))
                 .andExpect(jsonPath("$.data.memberId").value(10));
     }
 
@@ -134,7 +134,7 @@ class WorkspaceControllerTest {
         Long workspaceId = 1L;
         given(workspaceService.save(any(WorkspaceSaveRequestDto.class)))
                 .willReturn(WorkspaceResponseDto.builder()
-                        .id(workspaceId)
+                        .workspaceId(workspaceId)
                         .name(name)
                         .shortName(shortName)
                         .description(description)
@@ -156,7 +156,7 @@ class WorkspaceControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(header().stringValues("Location", "http://localhost/workspaces/" + workspaceId))
                 .andExpect(jsonPath("$.message").value("success created"))
-                .andExpect(jsonPath("$.data.id").value(1L))
+                .andExpect(jsonPath("$.data.workspaceId").value(1L))
                 .andExpect(jsonPath("$.data.memberId").value(10L));
     }
 
@@ -232,7 +232,7 @@ class WorkspaceControllerTest {
         //안그러면 null 떨어짐
         given(workspaceService.update(eq(workspaceId), any(WorkspaceUpdateRequestDto.class)))
                 .willReturn(WorkspaceResponseDto.builder()
-                        .id(workspaceId)
+                        .workspaceId(workspaceId)
                         .name(workspaceUpdateName)
                         .memberId(1L)
                         .email("ingduk2@gmail.com")
@@ -250,7 +250,7 @@ class WorkspaceControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.id").value(workspaceId))
+                .andExpect(jsonPath("$.data.workspaceId").value(workspaceId))
                 .andExpect(jsonPath("$.data.name").value(workspaceUpdateName));
     }
 

@@ -31,8 +31,7 @@ public class Board {
     private String title;
 
     @Builder
-    public Board(Long id, Workspace workSpace, Member member, String title) {
-        this.id = id;
+    public Board( Workspace workSpace, Member member, String title) {
         this.workSpace = workSpace;
         this.member = member;
         this.title = title;

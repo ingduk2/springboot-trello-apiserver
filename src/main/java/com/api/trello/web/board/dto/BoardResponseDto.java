@@ -10,19 +10,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardResponseDto {
 
-    private Long id;
+    private Long boardId;
 
     private String title;
 
     @Builder
-    public BoardResponseDto(Long id, String title) {
-        this.id = id;
+    public BoardResponseDto(Long boardId, String title) {
+        this.boardId = boardId;
         this.title = title;
     }
 
     public static BoardResponseDto of(Board board) {
         return BoardResponseDto.builder()
-                .id(board.getId())
+                .boardId(board.getId())
                 .title(board.getTitle())
                 .build();
     }

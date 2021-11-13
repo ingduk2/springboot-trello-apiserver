@@ -8,15 +8,15 @@ import lombok.Getter;
 @Getter
 public class MemberResponseDto {
 
-    private Long id;
+    private Long memberId;
     private String name;
     private String email;
     @JsonIgnore
     private String password;
 
     @Builder
-    public MemberResponseDto(Long id, String name, String email, String password) {
-        this.id = id;
+    public MemberResponseDto(Long memberId, String name, String email, String password) {
+        this.memberId = memberId;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -24,7 +24,7 @@ public class MemberResponseDto {
 
     public static MemberResponseDto of(Member member) {
         return MemberResponseDto.builder()
-                .id(member.getId())
+                .memberId(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())
                 .password(member.getPassword())

@@ -55,7 +55,7 @@ class SignControllerTest {
     }
 
     private String getJsonStringByDto(Object dto) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(dto);
+        return ControllerTestUtil.getJsonStringByDto(dto);
     }
 
     private MemberRequestDto getMemberRequestDto(String name, String email, String password) {
@@ -68,7 +68,7 @@ class SignControllerTest {
 
     private MemberResponseDto getMemberResponseDto(Long id, String name, String email, String password) {
         return MemberResponseDto.builder()
-                .id(id)
+                .memberId(id)
                 .name(name)
                 .email(email)
                 .password(password)
@@ -173,7 +173,7 @@ class SignControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.id").value(1))
+                .andExpect(jsonPath("$.data.memberId").value(1))
                 .andExpect(jsonPath("$.data.name").value("ingduk2"))
                 .andExpect(jsonPath("$.data.email").value("ingduk2@gmail.com"));
     }
@@ -221,7 +221,7 @@ class SignControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.id").value(1))
+                .andExpect(jsonPath("$.data.memberId").value(1))
                 .andExpect(jsonPath("$.data.email").value("ingduk2@gmail.com"))
                 .andExpect(jsonPath("$.data.name").value("ingduk2"));
     }

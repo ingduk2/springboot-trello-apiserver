@@ -89,7 +89,7 @@ class SignServiceTest {
         MemberResponseDto responseDto = signService.signUp(requestDto);
 
         //then
-        assertEquals(1L, responseDto.getId());
+        assertEquals(1L, responseDto.getMemberId());
         assertEquals(name, responseDto.getName());
         assertEquals(email, responseDto.getEmail());
         assertTrue(passwordEncoder.matches(password, responseDto.getPassword()));
@@ -158,7 +158,7 @@ class SignServiceTest {
         MemberResponseDto responseDto = signService.signIn(requestDto);
 
         //then
-        assertEquals(1L, responseDto.getId());
+        assertEquals(1L, responseDto.getMemberId());
         assertEquals(email, responseDto.getEmail());
         assertTrue(PasswordUtil.equalPassword(password, responseDto.getPassword()));
     }

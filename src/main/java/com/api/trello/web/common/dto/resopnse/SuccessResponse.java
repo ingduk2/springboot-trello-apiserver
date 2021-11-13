@@ -1,15 +1,12 @@
 package com.api.trello.web.common.dto.resopnse;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class SuccessResponse<T> {
+public class SuccessResponse<T> extends Header{
 
     private enum StatusCode {
         OK("success", 200, 200), //GET, PUT/PATCH
@@ -27,9 +24,15 @@ public class SuccessResponse<T> {
         }
     }
 
-    private String message;
-    private int status;
-    private int code;
+    @Builder
+    public SuccessResponse(String message, int status, int code, T data) {
+        super(message, status, code);
+        this.data = data;
+    }
+
+    public SuccessResponse(T data) {
+        this.data = data;
+    }
 
     private T data;
 
@@ -57,4 +60,5 @@ public class SuccessResponse<T> {
                 .data(data)
                 .build();
     }
+
 }

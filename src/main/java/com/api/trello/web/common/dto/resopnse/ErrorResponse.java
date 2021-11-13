@@ -9,20 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ErrorResopnse {
+public class ErrorResponse extends Header{
 
-    private String message;
-    private int status;
-    private int code;
+    @Builder
+    public ErrorResponse(String message, int status, int code, List<CustomFieldError> customFieldErrors) {
+        super(message, status, code);
+        this.customFieldErrors = customFieldErrors;
+    }
 
     @JsonProperty("errors")
     private List<CustomFieldError> customFieldErrors;
 
-    public static ErrorResopnse of(String message, int status, int code) {
-        return ErrorResopnse.builder()
+    public static ErrorResponse of(String message, int status, int code) {
+        return ErrorResponse.builder()
                 .message(message)
                 .status(status)
                 .code(code)

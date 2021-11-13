@@ -40,7 +40,7 @@ public class BoardController {
         BoardResponseDto savedBoard = boardService.save(requestDto);
 
         URI location = uriBuilder.path("/boards/{id}")
-                .buildAndExpand(savedBoard.getId())
+                .buildAndExpand(savedBoard.getBoardId())
                 .toUri();
 
         HttpHeaders headers = new HttpHeaders();

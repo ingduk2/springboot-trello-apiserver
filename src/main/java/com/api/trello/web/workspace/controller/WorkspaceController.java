@@ -44,7 +44,7 @@ public class WorkspaceController {
         WorkspaceResponseDto savedWorkspace = workspaceService.save(requestDto);
 
         URI location = uriBuilder.path("/workspaces/{id}")
-                .buildAndExpand(savedWorkspace.getId())
+                .buildAndExpand(savedWorkspace.getWorkspaceId())
                 .toUri();
 
         HttpHeaders headers = new HttpHeaders();
