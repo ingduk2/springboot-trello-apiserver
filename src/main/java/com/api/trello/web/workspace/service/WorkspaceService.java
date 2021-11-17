@@ -42,7 +42,7 @@ public class WorkspaceService {
 
     @Transactional(readOnly = true)
     public WorkspaceResponseDto findWorkspaceResponseDtoById(Long workspaceId) {
-        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(CWorkspaceNotFoundException::new);
+        Workspace workspace = findById(workspaceId);
 
         return WorkspaceResponseDto.of(workspace);
     }
