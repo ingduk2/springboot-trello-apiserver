@@ -88,14 +88,16 @@ class BoardServiceTest {
     void findAll_성공() {
         //given
         Member member = Member.builder().build();
+        Long workspaceId = 10L;
+        Workspace workspace = getWorkspace(workspaceId);
 
-        given(memberService.findCurrentMember())
-                .willReturn(member);
-        given(boardRepository.findAllByMember(any(Member.class)))
+        given(workspaceService.findById(workspaceId))
+                .willReturn(workspace);
+        given(boardRepository.findAllByWorkSpace(any(Workspace.class)))
                 .willReturn(getBoards());
 
         //when
-        List<BoardResponseDto> responseDtos = boardService.findAll();
+        List<BoardResponseDto> responseDtos = boardService.findAll(workspaceId);
 
         //then
         assertThat(responseDtos.size()).isEqualTo(10);

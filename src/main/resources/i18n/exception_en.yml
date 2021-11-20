@@ -50,3 +50,8 @@ invitedWorkspaceAlready:
   code: "3335"
   status: "400"
   msg: "invited workspace Already"
+listNotFound:
+  code: "5000"
+  status: "400"
+  msg: "This list Not Found"
+

@@ -22,9 +22,9 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping("/boards")
-    public ResponseEntity<SuccessResponse> findAllBoard() {
-        List<BoardResponseDto> boards = boardService.findAll();
+    @GetMapping("/workspaces/{workspaceId}/boards")
+    public ResponseEntity<SuccessResponse> findAllBoard(@PathVariable Long workspaceId) {
+        List<BoardResponseDto> boards = boardService.findAll(workspaceId);
         return ResponseEntity.ok(SuccessResponse.success(boards));
     }
 

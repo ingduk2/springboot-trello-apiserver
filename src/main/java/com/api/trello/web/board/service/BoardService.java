@@ -26,10 +26,10 @@ public class BoardService {
     private final MemberService memberService;
 
     @Transactional(readOnly = true)
-    public List<BoardResponseDto> findAll() {
-        Member currentMember = memberService.findCurrentMember();
+    public List<BoardResponseDto> findAll(Long workspaceId) {
+        Workspace workspace = workspaceService.findById(workspaceId);
 
-        return boardRepository.findAllByMember(currentMember).stream()
+        return boardRepository.findAllByWorkSpace(workspace).stream()
                 .map(BoardResponseDto::of)
                 .collect(Collectors.toList());
     }

@@ -19,7 +19,8 @@ public enum ExceptionCode {
     JSON_PARSER("jsonParser"),
     WORKSPACE_NOT_FOUND("workspaceNotFound"), 
     INVITED_WORKSPACE_MEMBER_IS_WORKSPACE_OWNER("invitedWorkspaceMemberIsWorkspaceOwner"),
-    INVITED_WORKSPACE_ALREADY("invitedWorkspaceAlready");
+    INVITED_WORKSPACE_ALREADY("invitedWorkspaceAlready"),
+    LIST_NOT_FOUND("listNotFound");
 
     private String name;
 

@@ -50,3 +50,7 @@ invitedWorkspaceAlready:
   code: "3335"
   status: "400"
   msg: "이미 workspace에 초대되어 있습니다."
+listNotFound:
+  code: "5000"
+  status: "400"
+  msg: "List가 없습니다."

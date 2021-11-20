@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -15,7 +15,7 @@ public class BoardSaveRequestDto {
     @NotNull
     private Long workspaceId;
 
-    @NotEmpty
+    @NotBlank(message = "board Title 은 필수 값입니다.")
     private String title;
 
     @Builder

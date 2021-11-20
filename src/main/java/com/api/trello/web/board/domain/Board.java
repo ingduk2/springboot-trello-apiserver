@@ -1,5 +1,6 @@
 package com.api.trello.web.board.domain;
 
+import com.api.trello.web.list.domain.Lists;
 import com.api.trello.web.member.domain.Member;
 import com.api.trello.web.workspace.domain.Workspace;
 import lombok.AccessLevel;
@@ -41,6 +42,10 @@ public class Board {
     //연관관계
     public void setWorkSpace(Workspace workSpace) {
         this.workSpace = workSpace;
+    }
+
+    public void addLists(Lists lists) {
+        lists.setBoard(this);
     }
 
     public void update(String title) {

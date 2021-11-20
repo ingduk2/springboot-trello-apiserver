@@ -82,12 +82,13 @@ class BoardControllerTest {
     @Test
     void GET_findAllBoard_성공() throws Exception {
         //given
-        given(boardService.findAll())
+        Long workspaceId = 1L;
+        given(boardService.findAll(eq(workspaceId)))
                 .willReturn(getBoardResponseDtos());
 
         //when
         final ResultActions actions = mvc.perform(
-                get(BOARD_URL))
+                get("/workspaces/1" + BOARD_URL))
                 .andDo(print())
                 .andDo(document("boards-findAll",
                         preprocessRequest(prettyPrint()),
