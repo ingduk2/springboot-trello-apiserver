@@ -42,7 +42,7 @@ public class ListsController {
         ListsResponseDto responseDto = listsService.save(requestDto);
 
         URI location = uriBuilder.path("/lists/{id}")
-                .buildAndExpand(responseDto.getBoardId())
+                .buildAndExpand(responseDto.getListId())
                 .toUri();
 
         HttpHeaders headers = new HttpHeaders();
