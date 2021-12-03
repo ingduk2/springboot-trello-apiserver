@@ -1,6 +1,7 @@
 package com.api.trello.web.list.dto;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,4 +17,10 @@ public class ListsSaveRequestDto {
 
     @NotBlank(message = "list Title 은 필수값 입니다.")
     private String listTitle;
+
+    @Builder
+    public ListsSaveRequestDto(Long boardId, String listTitle) {
+        this.boardId = boardId;
+        this.listTitle = listTitle;
+    }
 }
